@@ -1,0 +1,12 @@
+[
+    {
+        "task": "D:\\exe.exe",
+        "task_type": "app",
+        "task_args": ""
+    },
+    {
+        "task": "C:\\Windows\\notepad.exe",
+        "task_type": "app",
+        "task_args": ""
+    }
+]

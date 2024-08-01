@@ -10,13 +10,15 @@ use crate::action::Action;
 use std::ptr::null_mut;
 use std::sync::RwLock;
 
-lazy_static! { pub static ref APP_STATE: RwLock<Option<State>> = RwLock::new(None); }
+lazy_static! { pub static ref APP_STATE: RwLock<Option<(State, InternalIconState)>> = RwLock::new(None); }
 
-pub struct TaskbarIcon { pub hovered: bool, pub pressed: bool, pub action: Action }
-pub struct State { pub icons: Vec<TaskbarIcon> }
+#[derive(Clone)]
+pub struct InternalIconState { pub icons: Vec<(bool, bool)> }
+pub type State = Vec<Action>;
 
 pub unsafe fn initialize(icons: State) {
-    let width = 2 + (icons.icons.len() * 44);
+    let internal = get_internal_state(&icons);
+    let width = 2 + (icons.len() * 44);
     let pos = get_startup_loc(width as i32, 47, 5);
     let mut gdiplus_token = 0;
     let startup_input = GdiplusStartupInput {
@@ -35,7 +37,7 @@ pub unsafe fn initialize(icons: State) {
         hCursor: LoadCursorW(null_mut(), IDC_ARROW),
         hInstance: GetModuleHandleW(null_mut()),
     });
-    *APP_STATE.write().unwrap() = Some(icons);  
+    *APP_STATE.write().unwrap() = Some((icons, internal));
     let hwnd = CreateWindowExW(
         0, to_wstring("window").as_ptr(),
         to_wstring("").as_ptr(),
@@ -57,4 +59,10 @@ pub unsafe fn initialize(icons: State) {
         DispatchMessageW(&msg);
     }
     GdiplusShutdown(gdiplus_token);
+}
+
+fn get_internal_state(state: &State) -> InternalIconState {
+    let mut icons: Vec<(bool, bool)> = vec![];
+    for _ in 0..state.len() { icons.push((false, false)); }
+    InternalIconState { icons }
 }
