@@ -3,7 +3,9 @@ use crate::{action::Action, util::to_wstring};
 use std::ptr::null_mut;
 
 pub fn get(action: Action) -> HICON {
-    extract_icon(&action.task as &str).0
+    if let Some(icon) = action.custom_icon {
+        return extract_icon(&icon).0;
+    } extract_icon(&action.task as &str).0
 }
 
 fn extract_icon(path: &str) -> (HICON, i32, i32) {

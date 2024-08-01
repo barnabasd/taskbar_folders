@@ -1,11 +1,9 @@
 use std::{ffi::c_int, process::{exit, Command}, ptr::{null, null_mut}};
-
 use windows_sys::{core::PCWSTR, Win32::Foundation::{HINSTANCE, HWND}};
-
 use crate::util::to_wstring;
 
 #[derive(Clone)]
-pub struct Action { pub task: String, pub task_type: String, pub task_args: String }
+pub struct Action { pub task: String, pub task_type: String, pub task_args: String, pub custom_icon: Option<String> }
 
 pub fn execute(action: Action) {
     match &action.task_type as &str {

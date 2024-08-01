@@ -17,48 +17,54 @@ fn main() {
             action: Action {
                 task: "D:\\exe.exe".to_string(),
                 task_args: "".to_string(),
-                task_type: "app".to_string()
-            }
+                task_type: "app".to_string(),
+                custom_icon: None
+            },
         },
         TaskbarIcon {
             hovered: false, pressed: false,
             action: Action {
                 task: "C:\\Users\\Barnabás\\AppData\\Local\\BraveSoftware\\Brave-Browser\\Application\\brave.exe".to_string(),
                 task_args: "".to_string(),
-                task_type: "app".to_string()
-            }
+                task_type: "app".to_string(),
+                custom_icon: None
+            },
         },
         TaskbarIcon {
             hovered: false, pressed: false,
             action: Action {
                 task: "https://www.google.com".to_string(),
                 task_args: "".to_string(),
-                task_type: "website".to_string()
-            }
+                task_type: "website".to_string(),
+                custom_icon: None
+            },
         },
         TaskbarIcon {
             hovered: false, pressed: false,
             action: Action {
                 task: "D:\\exe.exe".to_string(),
                 task_args: "".to_string(),
-                task_type: "app".to_string()
-            }
+                task_type: "app".to_string(),
+                custom_icon: None
+            },
         },
         TaskbarIcon {
             hovered: false, pressed: false,
             action: Action {
                 task: "D:\\exe.exe".to_string(),
                 task_args: "".to_string(),
-                task_type: "app".to_string()
-            }
+                task_type: "app".to_string(),
+                custom_icon: Some("C:\\Windows\\notepad.exe".to_string())
+            },
         },
         TaskbarIcon {
             hovered: false, pressed: false,
             action: Action {
                 task: "D:\\exe.exe".to_string(),
                 task_args: "".to_string(),
-                task_type: "app".to_string()
-            }
+                task_type: "app".to_string(),
+                custom_icon: None
+            },
         }
     ]});}
 }

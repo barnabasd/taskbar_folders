@@ -11,6 +11,7 @@ use std::ptr::null_mut;
 use std::sync::RwLock;
 
 lazy_static! { pub static ref APP_STATE: RwLock<Option<State>> = RwLock::new(None); }
+
 pub struct TaskbarIcon { pub hovered: bool, pub pressed: bool, pub action: Action }
 pub struct State { pub icons: Vec<TaskbarIcon> }
 
