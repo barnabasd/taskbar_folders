@@ -16,3 +16,6 @@ features = [
 
 [dependencies.lazy_static]
 version = "1.5.0"
+
+[build-dependencies]
+winresource = "0.1.17"
