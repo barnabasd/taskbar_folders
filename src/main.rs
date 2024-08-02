@@ -6,6 +6,7 @@ use config::load;
 pub mod window;
 pub mod action;
 pub mod config;
+pub mod theme;
 pub mod paint;
 pub mod event;
 pub mod error;

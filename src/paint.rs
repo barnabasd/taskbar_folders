@@ -1,6 +1,7 @@
 use windows_sys::Win32::Graphics::GdiPlus::{ GdipCreateBitmapFromHICON, GdipCreateFromHDC, GdipCreateSolidFill, GdipDeleteGraphics, GdipDrawImageRect, GdipFillPie, GdipFillRectangle, GdipSetPixelOffsetMode, GdipSetSmoothingMode, GpBitmap, GpBrush, GpGraphics, GpImage, GpSolidFill, PixelOffsetModeHighQuality, SmoothingModeAntiAlias };
 use windows_sys::Win32::Graphics::Gdi::{ BeginPaint, BitBlt, CreateCompatibleBitmap, CreateCompatibleDC, DeleteDC, DeleteObject, EndPaint, SelectObject, PAINTSTRUCT, SRCCOPY };
 use windows_sys::Win32::Foundation::{ HWND, LPARAM, RECT, WPARAM };
+use crate::theme::get_val_from_theme;
 use crate::window::{InternalIconState, State};
 use std::ptr::null_mut;
 use crate::icon::get;
@@ -8,10 +9,6 @@ use crate::icon::get;
 const _TASBAR_BORDER_LIGHT: u32 = 0xFF000000;
 const _TASKBAR_BG_LIGHT: u32 = 0xFFFFFFFF;
 const _ICON_HOVER_LIGHT: u32 = 0xFFFFFFFF;
-
-const TASBAR_BORDER_DARK: u32 = 0xFF404040;
-const TASKBAR_BG_DARK: u32 = 0xFF1c1c1c;
-const ICON_HOVER_DARK: u32 = 0xFF292929;
 
 pub unsafe fn wm_paint(hwnd: HWND, _wp: WPARAM, _lp: LPARAM, state: &State, internal_state: InternalIconState) {
     let mut ps: PAINTSTRUCT = std::mem::zeroed();
@@ -26,18 +23,20 @@ pub unsafe fn wm_paint(hwnd: HWND, _wp: WPARAM, _lp: LPARAM, state: &State, inte
     GdipSetSmoothingMode(graphics, SmoothingModeAntiAlias);
     GdipSetPixelOffsetMode(graphics, PixelOffsetModeHighQuality);
     let mut brush: *mut GpSolidFill = null_mut();
-    GdipCreateSolidFill(TASBAR_BORDER_DARK, &mut brush);
+    GdipCreateSolidFill(get_val_from_theme(crate::theme::Color::Border), &mut brush);
     GdipFillRoundedRect(graphics, brush as *mut GpBrush, 0, 0, 
         ps.rcPaint.right - ps.rcPaint.left,
         ps.rcPaint.bottom - ps.rcPaint.top, 8);
-    GdipCreateSolidFill(TASKBAR_BG_DARK, &mut brush);
+    GdipCreateSolidFill(get_val_from_theme(crate::theme::Color::Background), &mut brush);
     GdipFillRoundedRect(graphics, brush as *mut GpBrush, 1, 1,
         ps.rcPaint.right - ps.rcPaint.left - 2,
         ps.rcPaint.bottom - ps.rcPaint.top - 2, 8);
     for (i, icon) in state.iter().enumerate() {
         let bounds: RECT = RECT {left: (3 + (i * 44)) as i32, bottom: 43, top: 3, right: (43 + (i * 44)) as i32 };
         let mut brush: *mut GpSolidFill = null_mut();
-        let color = if (internal_state.icons[i]).0 { ICON_HOVER_DARK } else { TASKBAR_BG_DARK };
+        let color = if (internal_state.icons[i]).0
+        { get_val_from_theme(crate::theme::Color::IconHover) } else
+        { get_val_from_theme(crate::theme::Color::Background) };
         GdipCreateSolidFill(color, &mut brush);
         GdipFillRoundedRect(graphics, brush as *mut GpBrush, bounds.left, bounds.top, bounds.right - bounds.left, bounds.bottom - bounds.top, 8);
         let mut gp_bitmap: *mut GpBitmap = null_mut();
