@@ -7,6 +7,7 @@ edition = "2021"
 serde = { version = "1.0.204", features = ["derive"]}
 serde_json = "1.0.121"
 lazy_static = "1.5.0"
+win-msgbox = "0.2.0"
 
 [dependencies.windows-sys]
 version = "0.59.0"

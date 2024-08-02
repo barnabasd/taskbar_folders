@@ -8,6 +8,7 @@ pub mod action;
 pub mod config;
 pub mod paint;
 pub mod event;
+pub mod error;
 pub mod util;
 pub mod icon;
 
