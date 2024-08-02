@@ -5,7 +5,8 @@ use win_msgbox::Okay;
     pub enum ErrorType {
     CouldntCreateMissingConfigFile,
     ConfigFileIconListEmpty,
-    CouldntParseConfigFile
+    CouldntParseConfigFile,
+    CouldntFindConfigFile
 }
 
 pub fn error(error_type: ErrorType) {
@@ -18,6 +19,9 @@ pub fn error(error_type: ErrorType) {
         },
         ErrorType::CouldntParseConfigFile => {
             _ = win_msgbox::error::<Okay>("Couldn't parse config.json correctly.").title("Error Loading Config").show().unwrap();
+        },
+        ErrorType::CouldntFindConfigFile => {
+            _ = win_msgbox::error::<Okay>("Couldn't find config.json.\nThe file has been created with 0 icons.").title("Error Loading Config").show().unwrap();
         }
     }
     exit(0);

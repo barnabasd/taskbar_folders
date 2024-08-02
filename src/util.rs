@@ -1,8 +1,8 @@
 use windows_sys::Win32::Graphics::Gdi::{GetMonitorInfoW, MonitorFromPoint, HMONITOR, MONITORINFO, MONITOR_DEFAULTTONEAREST};
 use windows_sys::Win32::UI::WindowsAndMessaging::GetCursorPos;
 use windows_sys::Win32::Foundation::{LRESULT, POINT, WPARAM};
-use std::{ffi::OsStr, os::windows::ffi::OsStrExt};
 use crate::window::{InternalIconState, State, APP_STATE};
+use std::{ffi::OsStr, os::windows::ffi::OsStrExt};
 
 pub fn to_wstring(str: &str) -> Vec<u16> { OsStr::new(str).encode_wide().chain(Some(0).into_iter()).collect() }
 pub unsafe fn loword(value: WPARAM) -> u32 { value as u32 & 0xFFFF }

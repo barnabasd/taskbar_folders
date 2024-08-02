@@ -21,6 +21,7 @@ pub fn load() -> State {
         let _config = File::create("config.json");
         if let Ok(mut config) = _config {
             _ = config.write_all(b"[]");
+            error(crate::error::ErrorType::CouldntFindConfigFile);
         }
         else {
             error(crate::error::ErrorType::CouldntCreateMissingConfigFile);
