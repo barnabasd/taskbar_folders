@@ -3,8 +3,8 @@ use windows_sys::Win32::Graphics::GdiPlus::{ GdiplusShutdown, GdiplusStartup, Gd
 use windows_sys::Win32::UI::WindowsAndMessaging::{ IDC_ARROW, SW_SHOW, WS_POPUP, MSG, WNDCLASSW };
 use windows_sys::Win32::Graphics::Gdi::{ CreateRoundRectRgn, SetWindowRgn, UpdateWindow };
 use windows_sys::Win32::System::LibraryLoader::GetModuleHandleW;
-use crate::util::{ get_startup_loc, to_wstring };
 use windows_sys::Win32::Foundation::{LPARAM, TRUE, WPARAM};
+use crate::util::{ get_startup_loc, to_wstring };
 use lazy_static::lazy_static;
 use crate::action::Action;
 use std::ptr::null_mut;
